@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/rates.dart';
 import '../services/exchange_service.dart';
+import '../widgets/rate_card.dart';
 
 
 

@@ -12,3 +12,5 @@ Actualmente, la aplicación se encuentra en fase de integración de persistencia
 - [ ] Un frontend mas comodo y mas amigable para los usuarios
 - [ ] Pequeña calculadora para hacer los cambios de precios en la tasfy
       
+
+Cabe recalcar que la APP trabaja con Hive, y si responde a los precios del dolar y euro localmente.
