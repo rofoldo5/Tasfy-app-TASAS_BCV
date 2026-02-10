@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saxv1/widgets/rate_glass_card.dart';
 import '../models/rates.dart';
 import '../services/exchange_service.dart';
 import '../widgets/rate_card.dart';
@@ -37,7 +38,11 @@ _ratesFuture = _service.getRates();
 Widget build(BuildContext context) {
 return Scaffold(
 appBar: AppBar(
-title: const Text('Tasas de Cambio'),
+title: const Text('Tasas de Cambio',
+style: TextStyle(
+fontWeight: FontWeight.w600,
+letterSpacing: 1.2,),),
+
 actions: [
 IconButton(onPressed: _refresh, icon: const Icon(Icons.refresh))
 ],
@@ -70,13 +75,27 @@ child: const Text('Reintentar'),
 final rate = snapshot.data!;
 
 
+debugPrint('USD: ${rate.usd}');
+debugPrint('EUR: ${rate.eur}');
+debugPrint('COP: ${rate.cop}');
+
 return Padding(
 padding: const EdgeInsets.all(16),
 child: Column(
 children: [
-_rateCard('Dólar BCV', rate.usdToVes, 'VES'),
-_rateCard('Euro BCV', rate.eurToVes, 'VES'),
-_rateCard('Bolívar → COP', rate.vesToCop, 'COP'),
+RateGlassCard(
+  currency: 'Dólar BCV',
+  value: rate.usd.toStringAsFixed(2),
+),
+RateGlassCard(
+  currency: 'Euro BCV',
+  value: rate.eur.toStringAsFixed(2),
+),
+RateGlassCard(
+  currency: 'Bolívar → COP',
+  value: rate.cop.toStringAsFixed(4),
+),
+
 const SizedBox(height: 20),
 Text('Actualizado: ${rate.timestamp}')
 ],

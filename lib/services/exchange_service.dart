@@ -33,9 +33,9 @@ class ExchangeService {
     final eurToVes = eurToUsd * usdToVes;
 
     return ExchangeRate(
-      usdToVes: usdToVes,
-      eurToVes: eurToVes,
-      vesToCop: usdToCop / usdToVes,
+      usd: usdToVes,
+      eur: eurToVes,
+      cop: usdToCop / usdToVes,
       timestamp: DateTime.now(),
     );
   } catch (e) {

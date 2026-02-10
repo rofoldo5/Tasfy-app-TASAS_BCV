@@ -1,25 +1,22 @@
-import 'package:hive/hive.dart';
-
-part 'rates.g.dart';
-
-@HiveType(typeId: 0)
 class ExchangeRate {
-  @HiveField(0)
-  final double usdToVes;
-
-  @HiveField(1)
-  final double eurToVes;
-
-  @HiveField(2)
-  final double vesToCop;
-
-  @HiveField(3)
+  final double usd;
+  final double eur;
+  final double cop;
   final DateTime timestamp;
 
   ExchangeRate({
-    required this.usdToVes,
-    required this.eurToVes,
-    required this.vesToCop,
+    required this.usd,
+    required this.eur,
+    required this.cop,
     required this.timestamp,
   });
+
+  factory ExchangeRate.fromJson(Map<String, dynamic> json) {
+    return ExchangeRate(
+      usd: (json['usd'] as num).toDouble(),
+      eur: (json['eur'] as num).toDouble(),
+      cop: (json['cop'] as num).toDouble(),
+      timestamp: json['timestamp'],
+    );
+  }
 }
