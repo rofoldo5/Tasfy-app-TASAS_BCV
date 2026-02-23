@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:saxv1/main.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/exchange_service.dart';
 import '../models/rates.dart';
 import '../widgets/rate_card.dart';
 import '../widgets/calculador_widget.dart';
 import '../widgets/app_footer.dart';
-
+import '../providers/theme_provider.dart' as theme_provider;
 
 class RatesScreen extends StatefulWidget {
   const RatesScreen({super.key});
@@ -40,6 +41,7 @@ class _RatesScreenState extends State<RatesScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
       body: SafeArea(
@@ -77,34 +79,63 @@ class _RatesScreenState extends State<RatesScreen> {
                             ),
                         ],
                       ),
-                      // Toggle tema con estilo
-                        GestureDetector(
-                        onTap: () {
-                          themeNotifier.value =
-                              themeNotifier.value == ThemeMode.dark
-                                  ? ThemeMode.light
-                                  : ThemeMode.dark;
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: theme.colorScheme.surfaceContainerHighest
-                                .withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(12),
+                      // Botones de acción
+                      Row(
+                        children: [
+                          // Botón Patreon
+                          GestureDetector(
+                            onTap: () async {
+                              final Uri uri = Uri.parse('https://www.patreon.com/posts/tasfy-151423399');
+                              if (await canLaunchUrl(uri)) {
+                                await launchUrl(uri, mode: LaunchMode.inAppWebView);
+                              }
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: isDark
+                                    ? Colors.white.withOpacity(0.08)
+                                    : Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: FaIcon(
+                                FontAwesomeIcons.patreon,
+                                size: 20,
+                                color: const Color(0xFF052582),
+                              ),
+                            ),
                           ),
-                          child: Icon(
-                            themeNotifier.value == ThemeMode.dark
-                                ? Icons.light_mode_rounded
-                                : Icons.dark_mode_rounded,
-                            size: 20,
+                          const SizedBox(width: 8),
+                          // Toggle tema con estilo
+                          GestureDetector(
+                            onTap: () {
+                              theme_provider.themeNotifier.value =
+                                  theme_provider.themeNotifier.value == ThemeMode.dark
+                                      ? ThemeMode.light
+                                      : ThemeMode.dark;
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: isDark
+                                    ? Colors.white.withOpacity(0.08)
+                                    : Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Icon(
+                                theme_provider.themeNotifier.value == ThemeMode.dark
+                                    ? Icons.light_mode_rounded
+                                    : Icons.dark_mode_rounded,
+                                size: 20,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
                 ),
               ),
-
 
               // Contenido
               SliverToBoxAdapter(
@@ -159,6 +190,10 @@ class _RatesScreenState extends State<RatesScreen> {
                     );
                   },
                 ),
+              ),
+              // Footer separado
+              const SliverToBoxAdapter(
+                child: AppFooter(),
               ),
             ],
           ),

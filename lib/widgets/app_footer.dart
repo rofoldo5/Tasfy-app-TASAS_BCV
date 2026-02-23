@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key});
+
+  // Tus URLs de redes sociales
+  static const String githubUrl = 'https://github.com/rofoldo5';
+  static const String instagramUrl = 'https://instagram.com/rodolfoabtt';
+  static const String twitterUrl = 'https://x.com/sp3ak_';
+
+  Future<void> _launchUrl(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+      
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,24 +73,27 @@ class AppFooter extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _buildSocialButton(
-                icon: Icons.language_rounded,
+                icon: FontAwesomeIcons.github,
                 label: 'GitHub',
                 isDark: isDark,
                 theme: theme,
+                onTap: () => _launchUrl(githubUrl),
               ),
               const SizedBox(width: 16),
               _buildSocialButton(
-                icon: Icons.camera_alt_rounded,
+                icon: FontAwesomeIcons.instagram,
                 label: 'Instagram',
                 isDark: isDark,
                 theme: theme,
+                onTap: () => _launchUrl(instagramUrl),
               ),
               const SizedBox(width: 16),
               _buildSocialButton(
-                icon: Icons.share_rounded,
+                icon: FontAwesomeIcons.twitter,
                 label: 'Twitter',
                 isDark: isDark,
                 theme: theme,
+                onTap: () => _launchUrl(twitterUrl),
               ),
             ],
           ),
@@ -140,36 +158,40 @@ class AppFooter extends StatelessWidget {
     required String label,
     required bool isDark,
     required ThemeData theme,
+    required VoidCallback onTap,
   }) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: isDark
-                ? Colors.white.withOpacity(0.08)
-                : Colors.grey.shade200,
-            borderRadius: BorderRadius.circular(12),
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: isDark
+                  ? Colors.white.withOpacity(0.08)
+                  : Colors.grey.shade200,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: FaIcon(
+              icon,
+              size: 20,
+              color: theme.colorScheme.primary,
+            ),
           ),
-          child: Icon(
-            icon,
-            size: 20,
-            color: theme.colorScheme.primary,
+          const SizedBox(height: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w500,
+              color: isDark
+                  ? Colors.white.withOpacity(0.7)
+                  : Colors.black.withOpacity(0.7),
+            ),
           ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.w500,
-            color: isDark
-                ? Colors.white.withOpacity(0.7)
-                : Colors.black.withOpacity(0.7),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

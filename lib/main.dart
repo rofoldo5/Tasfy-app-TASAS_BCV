@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/rates_screen.dart';
 import 'theme/app_theme.dart';
-
-ValueNotifier<ThemeMode> themeNotifier =
-    ValueNotifier(ThemeMode.light);
+import 'providers/theme_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
+    return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeNotifier,
       builder: (_, ThemeMode mode, __) {
         return MaterialApp(

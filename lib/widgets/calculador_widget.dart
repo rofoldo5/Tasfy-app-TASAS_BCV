@@ -26,7 +26,7 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
   final List<String> _currencies = ['USD', 'EUR', 'VES', 'COP'];
 
   void _calculate() {
-    final input = double.tryParse(_controller.text) ?? 0;
+    final input = double.tryParse(_controller.text) ?? 0.0;
     double valueInVes;
 
     switch (_selectedFrom) {
