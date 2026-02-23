@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-ThemeData neonDarkTheme = ThemeData.dark().copyWith(
-  scaffoldBackgroundColor: const Color(0xFF0B0F1A),
-  primaryColor: const Color.fromARGB(255, 158, 172, 159),
+ThemeData neonWhiteTheme = ThemeData.dark().copyWith(
+  scaffoldBackgroundColor: const Color.fromARGB(255, 248, 248, 248),
+  primaryColor: const Color.fromARGB(255, 249, 249, 249),
 
   textTheme: const TextTheme(
     titleLarge: TextStyle(
@@ -21,7 +21,7 @@ ThemeData neonDarkTheme = ThemeData.dark().copyWith(
   ),
 
   appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.transparent,
+    backgroundColor: Color.fromARGB(0, 255, 255, 255),
     elevation: 0,
     centerTitle: true,
   ),
